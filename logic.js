@@ -10,7 +10,7 @@ function calculateFLAMES() {
     let name1Array = name1.split("");
     let name2Array = name2.split("");
 
-    // Remove common letters
+
     name1Array.forEach((letter, index) => {
         let matchIndex = name2Array.indexOf(letter);
         if (matchIndex !== -1) {
@@ -20,7 +20,7 @@ function calculateFLAMES() {
     });
 
     let remainingLetters = [...name1Array, ...name2Array].filter(letter => letter !== "").length;
-    let flames = ["Friends", "Lovers", "Affection", "Marriage", "Enemies", "Siblings"];
+    let flames = ["F- Friends", "L- Lovers", "A- Affection", "M- Marriage", "E- Enemies", "S- Siblings"];
 
     let index = (remainingLetters % flames.length) || flames.length;
     let relationship = flames[index - 1];
