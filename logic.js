@@ -1,29 +1,34 @@
 function calculateFLAMES() {
-    let name1 = document.getElementById("name1").value.toLowerCase().replace(/\s/g, "");
-    let name2 = document.getElementById("name2").value.toLowerCase().replace(/\s/g, "");
+    let name1 = document.getElementById("name1").value.toLowerCase().replace(/\s/g, '');
+    let name2 = document.getElementById("name2").value.toLowerCase().replace(/\s/g, '');
 
-    if (name1 === "" || name2 === "") {
-        document.getElementById("result").innerText = "Please enter both names!";
-        return;
+    for (let i = 0; i < name1.length; i++) {
+        for (let j = 0; j < name2.length; j++) {
+            if (name1[i] === name2[j]) {
+                name1 = name1.substring(0, i) + name1.substring(i + 1);
+                name2 = name2.substring(0, j) + name2.substring(j + 1);
+                i = -1;
+                break;
+            }
+        }
     }
 
-    let name1Array = name1.split("");
-    let name2Array = name2.split("");
+    let totalCount = name1.length + name2.length;
+    let flames = ['F', 'L', 'A', 'M', 'E', 'S'];
+    let relationships = {
+        F: "Friends",
+        L: "Love",
+        A: "Affection",
+        M: "Marriage",
+        E: "Enemies",
+        S: "Siblings"
+    };
 
+    let index = 0;
+    while (flames.length > 1) {
+        index = (index + totalCount - 1) % flames.length;
+        flames.splice(index, 1);
+    }
 
-    name1Array.forEach((letter, index) => {
-        let matchIndex = name2Array.indexOf(letter);
-        if (matchIndex !== -1) {
-            name1Array[index] = "";
-            name2Array[matchIndex] = "";
-        }
-    });
-
-    let remainingLetters = [...name1Array, ...name2Array].filter(letter => letter !== "").length;
-    let flames = ["F- Friends", "L- Lovers", "A- Affection", "M- Marriage", "E- Enemies", "S- Siblings"];
-
-    let index = (remainingLetters % flames.length) || flames.length;
-    let relationship = flames[index - 1];
-
-    document.getElementById("result").innerText = "Relationship: " + relationship;
+    document.getElementById("result").innerText = `Relationship: ${relationships[flames[0]]}`;
 }
